@@ -3,43 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="form.css">
-    <script src="app.js" defer></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
+    <title>Register form</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <form  action="" id="form">
-            <h1>Register</h1>
-            <div class="input">
-            <label class="username">Username</label>
-            <input type="text" id="username" name="username">
-            <div class="error"></div>
-        </div>
-        
-            <div class="input">
-            <label class="email">Email</label>
-            <input type="text" id="email" name="email">
-            <div class="error"></div>
-           </div>
-       
-           <div class="input">
-            <label class="password">Password</label>
-            <input type="password" id="password" name="password">
-            <div class="error"></div>
-        </div>
-       
-           <div class="input">
-            <label class="cpassword">Confirm Password</label>
-            <input type="password" id="cpassword" name="cpassword">
-            <div class="error"></div>
-        </div>
-            <button class="reg">Submit</button>
-        </form>
-      
-    </div>
+  <div class="container">
+    <form id="myForm" onsubmit="ValidateForm(event)">
+      <h1>Register</h1>
+      <div class="input">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name">
+        <span id="nameError" class="error"></span><br>
+      </div>
+      <div class="input">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email">
+        <span id="emailError" class="error"></span><br>
+      </div>
+      <div class="input">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password">
+        <span id="passwordError" class="error"></span><br>
+      </div>
+      <div class="input">
+        <label for="mobilenumber">Mobile number</label>
+        <input type="text" id="mobilenumber" name="mobilenumber">
+        <span id="mobilenumberError" class="error"></span><br>
+      </div>
+      <button class="reg" type="submit">Submit</button>
+    </form>
+
+    <script>
+      function ValidateForm(event) {
+        event.preventDefault();
+
+        var username = document.getElementById("name").value.trim();  
+        var email = document.getElementById("email").value.trim();
+        var password = document.getElementById("password").value.trim();
+        var mobilenumber = document.getElementById("mobilenumber").value.trim();
+
+        // Clear previous errors
+        document.getElementById("nameError").innerText = "";
+        document.getElementById("emailError").innerText = "";
+        document.getElementById("passwordError").innerText = "";
+        document.getElementById("mobilenumberError").innerText = "";
+
+        // Name validation
+        if (username === "") {
+          document.getElementById("nameError").innerText = "Name is required";
+          return false;
+        }
+
+        // Email validation
+        var emailRegex = /^[^@]+@[^@]+\.[^@]+$/; 
+        if (!emailRegex.test(email)) {
+          document.getElementById("emailError").innerText = "Invalid email address";
+          return false;
+        }
+
+        // Password validation
+        var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%?&]{8,16}$/;
+        if (!passwordRegex.test(password)) {
+          document.getElementById("passwordError").innerText = "Password must be 8-16 characters long, include one uppercase letter, one lowercase letter, and one number";
+          return false;
+        }
+
+        // Mobile number validation
+        var mobilenumberRegex = /^\d{10}$/;
+        if (!mobilenumberRegex.test(mobilenumber)) {
+          document.getElementById("mobilenumberError").innerText = "Invalid mobile number";
+          return false;
+        }
+
+        // If all validations pass
+        alert("Form Submitted Successfully!");
+      }
+    </script>
+  </div>
 </body>
+</html>
+
